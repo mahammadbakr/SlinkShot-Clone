@@ -39,11 +39,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
           theme: ThemeData(
             primaryColor: PaletteColors.mainAppColor,
-            primarySwatch: Colors.red,
+            primarySwatch: Colors.lightBlue,
             appBarTheme: AppBarTheme(
               elevation: 3,
             ),
-            scaffoldBackgroundColor: PaletteColors.whiteBg,
+            scaffoldBackgroundColor: PaletteColors.mainBackground,
           ),
           title: 'Slikon Shot Clone',
           initialRoute: '/',

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:slinkshot_clone/Constants/ColorConstants.dart';
 import 'package:slinkshot_clone/Screens/HomeScreen/HomeScreen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -24,7 +25,8 @@ class _SplashScreenState extends State<SplashScreen> {
     @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: CircularProgressIndicator(),),
+      backgroundColor: PaletteColors.secondBackground,
+      body: Center(child: Image.asset("assets/images/logo.gif"),),
     );
   }
 }
