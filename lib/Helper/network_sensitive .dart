@@ -23,7 +23,7 @@ class NetworkSensitive extends StatelessWidget {
               Text(
                 'you are currently offline',
                 style: TextStyle(
-                  color: PaletteColors.redColorApp.withOpacity(0.7),
+                  color: PaletteColors.blueColorApp.withOpacity(0.7),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -31,18 +31,18 @@ class NetworkSensitive extends StatelessWidget {
               Text(
                 'please check your internet connection',
                 style: TextStyle(
-                  color: PaletteColors.darkRedColorApp,
+                  color: PaletteColors.blackAppColor,
                   fontSize: 12,
                 ),
               ),
               FlatButton.icon(
                 onPressed: () {},
-                textColor: PaletteColors.darkRedColorApp,
+                textColor: PaletteColors.blueColorApp,
                 label: Text(
                   'retry',
                   style: TextStyle(fontSize: 12),
                 ),
-                icon: Icon(Icons.refresh, color: PaletteColors.darkRedColorApp),
+                icon: Icon(Icons.refresh, color: PaletteColors.lightColorApp),
               )
             ],
           ),
