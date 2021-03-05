@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:slinkshot_clone/Providers/AppSettingsProvider.dart';
+import 'package:slinkshot_clone/Screens/SignInScreen/SignInScreen.dart';
 import 'Constants/ColorConstants.dart';
 import 'Helper/connectivity_status.dart';
-import 'Providers/AuthProvider.dart';
+import 'Providers/AuthenticationProvider.dart';
+import 'Providers/OtherProvider.dart';
 import 'Screens/HomeScreen/HomeScreen.dart';
 import 'Screens/SplashScreen/SplashScreen.dart';
 
@@ -20,14 +23,19 @@ class Providers extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AuthProvider>(
-          create: (context) => AuthProvider(),
+        ChangeNotifierProvider<AuthenticationProvider>(
+          create: (context) => AuthenticationProvider(),
         ),
-
+        ChangeNotifierProvider<AppSettingsProvider>(
+          create: (context) => AppSettingsProvider(),
+        ),
+        ChangeNotifierProvider<OtherProvider>(
+          create: (context) => OtherProvider(),
+        ),
       ],
       child: StreamProvider<ConnectivityStatus>(
           create: (context) =>
-          ConnectivityService().connectionStatusControllerStream,
+              ConnectivityService().connectionStatusControllerStream,
           child: MyApp()),
     );
   }
@@ -37,21 +45,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-          theme: ThemeData(
-            primaryColor: PaletteColors.mainAppColor,
-            primarySwatch: Colors.lightBlue,
-            appBarTheme: AppBarTheme(
-              elevation: 3,
-            ),
-            scaffoldBackgroundColor: PaletteColors.mainBackground,
-          ),
-          title: 'Slikon Shot Clone',
-          initialRoute: '/',
-          debugShowCheckedModeBanner: false,
-          routes: {
-            '/': (context) => SplashScreen(),
-            '/home': (context) => HomeScreen(),
-          },
+      theme: ThemeData(
+        primaryColor: PaletteColors.mainAppColor,
+        primarySwatch: Colors.lightBlue,
+        appBarTheme: AppBarTheme(
+          elevation: 3,
+        ),
+        scaffoldBackgroundColor: PaletteColors.mainBackground,
+      ),
+      title: 'SlinkShot Clone',
+      initialRoute: '/',
+      debugShowCheckedModeBanner: false,
+      routes: {
+        '/': (context) => SplashScreen(),
+        '/home': (context) => HomeScreen(),
+        '/signIn': (context) => SignInScreen(),
+      },
     );
   }
 }

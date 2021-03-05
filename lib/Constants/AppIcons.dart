@@ -11,6 +11,10 @@ class AppIcons  {
   static String intro = 'assets/images/intro.png';
   static String logoGif = 'assets/images/logo.gif';
   static String title = 'assets/images/title.png';
-  // static String title2 = 'assets/images/title2.png';
+  static String scrollFif = 'assets/images/gif.gif';
+  static String love = 'assets/images/love.png';
+  static String unlove = 'assets/images/unlove.png';
+  static String share = 'assets/images/share.png';
+  static String comment = 'assets/images/comment.png';
 
 }

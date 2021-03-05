@@ -1,65 +1,51 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:slinkshot_clone/Constants/AppIcons.dart';
 import 'package:slinkshot_clone/Constants/ColorConstants.dart';
+import 'package:slinkshot_clone/Providers/AppSettingsProvider.dart';
+import 'package:slinkshot_clone/Providers/AuthenticationProvider.dart';
+import 'package:slinkshot_clone/Screens/HomeScreen/Tabs/HomeTab.dart';
+import 'package:slinkshot_clone/Screens/HomeScreen/Tabs/ProfileTab.dart';
+import 'package:slinkshot_clone/Screens/HomeScreen/Tabs/SearchTab.dart';
+import 'package:slinkshot_clone/Screens/HomeScreen/Tabs/SkinTab.dart';
 
 class HomeScreen extends StatefulWidget {
-
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-  int _selectedIndex = 1;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Skin',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Search',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Profile',
-      style: optionStyle,
-    ),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final authProvider =
+        Provider.of<AuthenticationProvider>(context, listen: false);
+    final settingsProvider =
+        Provider.of<AppSettingsProvider>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: PaletteColors.secondBackground,
-        centerTitle: false,
-        title: Image.asset(AppIcons.title,height: 44,),
+        centerTitle: true,
+        title: Image.asset(
+          AppIcons.title,
+          height: 44,
+        ),
         leading: SizedBox.shrink(),
       ),
-      body: Column(
-        children: [
-          Center(
-            child: Text("home screen"),
-          ),
-        ],
-      ),
+      body: Consumer<AppSettingsProvider>(
+          builder: (_, homeState, __) =>
+              homeState.getHomeTab().toString() == "0"
+                  ? SkinTab()
+                  : homeState.getHomeTab().toString() == "1"
+                      ? SearchTab()
+                      : homeState.getHomeTab().toString() == "2"
+                          ? HomeTab()
+                          : ProfileTab()),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         iconSize: 40,
-        items:  <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: ImageIcon(
               AssetImage(AppIcons.skin1),
@@ -72,22 +58,26 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             label: 'Search',
           ),
-
           BottomNavigationBarItem(
-            icon:  ImageIcon(
+            icon: ImageIcon(
               AssetImage(AppIcons.camera),
             ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon:  ImageIcon(
+            icon: ImageIcon(
               AssetImage(AppIcons.personGirl),
             ),
             label: 'Profile',
           ),
         ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        currentIndex: settingsProvider.getHomeTab(),
+        onTap: (index) {
+          setState(() {
+            settingsProvider.setHomeTab(index);
+            print(index);
+          });
+        },
       ),
     );
   }
