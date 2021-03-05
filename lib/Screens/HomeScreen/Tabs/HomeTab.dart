@@ -29,17 +29,16 @@ class HomeTab extends StatelessWidget {
 
     return Consumer<OtherProvider>(builder: (_, providerState, __) {
       print("length${providerState.slinkshotsList.length}");
-
       return providerState.slinkshotsList.isEmpty
           ? Center(child: CircularProgressIndicator())
-          : PageView.builder(
-              controller: controller,
-              itemBuilder: (BuildContext ctx, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Stack(
-                    children: [
-                      GradientBorder(
+          : Stack(
+            children: [
+              PageView.builder(
+                  controller: controller,
+                  itemBuilder: (BuildContext ctx, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: GradientBorder(
                         strokeWidth: 2,
                         radius: 15,
                         gradient: LinearGradient(colors: [
@@ -147,26 +146,32 @@ class HomeTab extends StatelessWidget {
                           ],
                         ),
                       ),
-                      index == 0
-                          ? Positioned(
-                              bottom: 5,
-                              right: 5,
-                              child: Transform.rotate(
-                                  angle: pi / 1,
-                                  child: Image.network(
-                                    "https://media1.giphy.com/media/VIRAkrN465YxZZrEJU/source.gif",
-                                    width: 60,
-                                    height: 60,
-                                  )),
-                            )
-                          : SizedBox.shrink()
-                    ],
-                  ),
-                );
-              },
-              itemCount: providerState.slinkshotsList.length,
-              scrollDirection: Axis.vertical,
-            );
+                    );
+                  },
+                  itemCount: providerState.slinkshotsList.length,
+                  scrollDirection: Axis.vertical,
+                ),
+
+              Positioned(
+                bottom: 10,
+                right: 15,
+                child: Row(
+                  children: [
+                    FloatingActionButton(
+                        mini: true,
+                        backgroundColor: PaletteColors.mainAppColor,
+                        child: Icon(
+                          Icons.add,
+                          color: PaletteColors.mainBackground,
+                        ),
+                        onPressed: () async {
+
+                        }),
+                  ],
+                ),
+              ),
+            ],
+          );
     });
   }
 }

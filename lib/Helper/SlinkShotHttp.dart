@@ -6,12 +6,12 @@ Future<Map<String, dynamic>> postHTTP(
   // Map<String, String> headers = {
   //   'Content-Type': 'application/json',
   // };
-  final bodyJson = jsonEncode(
-    body,
-  );
+  // final bodyJson = jsonEncode(
+  //   body,
+  // );
   var response = await http.post(
     url,
-    body: bodyJson,
+    body: body,
   );
 
   // bool isPass =  handleError(jsonDecode(response.body)["code"].toString());

@@ -6,7 +6,7 @@ class  UserDetails {
   final String id;
   final String user;
   final String name;
-  final String image;
+  // final String skin;
   final String bio;
   final String channel;
   final String followers;
@@ -16,7 +16,7 @@ class  UserDetails {
       {@required this.id,
         @required this.user,
         @required this.name,
-        @required this.image,
+        // @required this.skin,
         @required this.bio,
         @required this.channel,
         @required this.followers,
@@ -27,7 +27,7 @@ class  UserDetails {
       id: data["_id"],
     user: data["user"],
       name: data["name"],
-    image: data["image"],
+      // skin: data["skin"],
     bio: data["bio"],
     channel: data["channel"],
     followers: data["followers"],
@@ -38,7 +38,7 @@ class  UserDetails {
     '_id': id,
     'user': user,
     'name': name,
-    'image': image,
+    // 'skin': skin,
     'bio': bio,
     'channel': channel,
     'followers': followers,

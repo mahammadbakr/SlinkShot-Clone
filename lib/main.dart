@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:slinkshot_clone/Providers/AppSettingsProvider.dart';
+import 'package:slinkshot_clone/Screens/EditProfileScreen/EditProfileScreen.dart';
 import 'package:slinkshot_clone/Screens/SignInScreen/SignInScreen.dart';
+import 'package:slinkshot_clone/Screens/SignUpScreen/SignUpScreen.dart';
 import 'Constants/ColorConstants.dart';
 import 'Helper/connectivity_status.dart';
 import 'Providers/AuthenticationProvider.dart';
@@ -60,6 +62,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => SplashScreen(),
         '/home': (context) => HomeScreen(),
         '/signIn': (context) => SignInScreen(),
+        '/signUp': (context) => SignUpScreen(),
+        '/editProfile': (context) => EditProfileScreen(),
       },
     );
   }
