@@ -4,19 +4,19 @@ import 'package:flutter/cupertino.dart';
 
 class  UserDetails {
   final String id;
-  final String user;
+  final Map<String,dynamic> user;
   final String name;
-  // final String skin;
+  final Map<String,dynamic> skin;
   final String bio;
   final String channel;
-  final String followers;
-  final String slinkshots;
+  final List<dynamic>followers;
+  final List<dynamic> slinkshots;
 
   UserDetails(
       {@required this.id,
         @required this.user,
         @required this.name,
-        // @required this.skin,
+        @required this.skin,
         @required this.bio,
         @required this.channel,
         @required this.followers,
@@ -27,7 +27,7 @@ class  UserDetails {
       id: data["_id"],
     user: data["user"],
       name: data["name"],
-      // skin: data["skin"],
+      skin: data["skin"],
     bio: data["bio"],
     channel: data["channel"],
     followers: data["followers"],
@@ -38,7 +38,7 @@ class  UserDetails {
     '_id': id,
     'user': user,
     'name': name,
-    // 'skin': skin,
+    'skin': skin,
     'bio': bio,
     'channel': channel,
     'followers': followers,

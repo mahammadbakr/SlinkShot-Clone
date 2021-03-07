@@ -11,5 +11,6 @@ class PaletteColors {
   static Color lightColorApp = const Color(0xffffe1bc);
   static Color blueColorApp = const Color(0xff4884B9);
   static Color yellowColorApp = const Color(0xfffec782);
+  static Color buttonColor = const Color(0xFF162A49);
 
 }

@@ -6,18 +6,36 @@ import 'package:provider/provider.dart';
 import 'package:slinkshot_clone/Constants/AppIcons.dart';
 import 'package:slinkshot_clone/Constants/AppTextStyle.dart';
 import 'package:slinkshot_clone/Constants/ColorConstants.dart';
+import 'package:slinkshot_clone/Models/UserDetails.dart';
 import 'package:slinkshot_clone/Providers/AuthenticationProvider.dart';
+import 'package:slinkshot_clone/Providers/OtherProvider.dart';
 
 class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    AuthenticationProvider auth =
+        Provider.of<AuthenticationProvider>(context, listen: false);
+
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(vertical: 10),
       child: Column(
         children: [
-          Image.asset(
-            AppIcons.camera,
-            scale: 6,
+          Stack(
+            children: [
+              FadeInImage.assetNetwork(
+                placeholder: AppIcons.loading,
+                image:auth.mySkin.image,
+                height: 150,
+                width: 150,
+              ),
+              Positioned(
+                right: 2,top: 2,
+                  child: IconButton(
+                iconSize: 30,
+                icon: Icon(Icons.edit),
+                onPressed: () {},
+              )),
+            ],
           ),
           Container(
             decoration: BoxDecoration(
@@ -27,7 +45,7 @@ class ProfileTab extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             padding: EdgeInsets.all(6),
             child: Text(
-              "My Story Starts Where I'm Beginning  My Story Starts Where I'm Beginning to open my eyes! My Story Starts Where I'm Beginning  My Story Starts Where I'm Beginning to open my eyes! My Story Starts Where I'm Beginning ",
+              auth.myUserDetails.bio,
               style: AppTextStyle.thinTitle16,
             ),
           ),
@@ -49,7 +67,7 @@ class ProfileTab extends StatelessWidget {
           ProfileMenu(
             text: "My SlinkShots",
             icon: AppIcons.slinkImage,
-            press: () {},
+            press: () =>Navigator.pushNamed(context, "/mySlinkShots"),
           ),
           ProfileMenu(
             text: "Notifications",
@@ -60,7 +78,8 @@ class ProfileTab extends StatelessWidget {
             text: "Log Out",
             icon: AppIcons.logout,
             press: () {
-              Provider.of<AuthenticationProvider>(context, listen: false).setLoginFalse();
+              Provider.of<AuthenticationProvider>(context, listen: false)
+                  .setLoginFalse();
             },
           ),
         ],
@@ -85,7 +104,7 @@ class ProfileMenu extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       child: FlatButton(
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.all(10),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         color: PaletteColors.yellowColorApp,
         onPressed: press,
@@ -108,4 +127,3 @@ class ProfileMenu extends StatelessWidget {
     );
   }
 }
-

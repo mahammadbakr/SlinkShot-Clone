@@ -13,7 +13,7 @@ class SearchTab extends StatelessWidget {
           children: [
             TextFormField(
               decoration: InputDecoration(
-                hintText: 'Search for peoples, skins and videos',
+                hintText: 'Search for Slinkshots',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12)
                 ),

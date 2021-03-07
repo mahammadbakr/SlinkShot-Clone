@@ -25,5 +25,10 @@ class AppIcons  {
   static String notification = 'assets/images/notification.png';
   static String logout = 'assets/images/logout.png';
   static String filter = 'assets/images/filter.png';
+  static String eye = 'assets/images/eye.png';
+  static String logoBackground = 'assets/images/logoBackground.png';
+  static String loading = 'assets/images/loading.gif';
+  static String imageLoading = 'assets/images/imageLoading.png';
+  static String slinkCoin = 'assets/images/slinkCoin.png';
 
 }

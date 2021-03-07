@@ -1,12 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:slinkshot_clone/Constants/AppIcons.dart';
 import 'package:slinkshot_clone/Constants/AppTextStyle.dart';
 import 'package:slinkshot_clone/Constants/ColorConstants.dart';
+import 'package:slinkshot_clone/Providers/AuthenticationProvider.dart';
 
 class EditProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    AuthenticationProvider auth =
+    Provider.of<AuthenticationProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: PaletteColors.secondBackground,
@@ -23,9 +27,22 @@ class EditProfileScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Center(
-                child: Image.asset(
-                  AppIcons.personBoy,
-                  scale: 5,
+                child: Stack(
+                  children: [
+                    FadeInImage.assetNetwork(
+                      placeholder: AppIcons.loading,
+                      image:auth.mySkin.image,
+                      height: 150,
+                      width: 150,
+                    ),
+                    Positioned(
+                        right: 2,top: 2,
+                        child: IconButton(
+                          iconSize: 30,
+                          icon: Icon(Icons.edit),
+                          onPressed: () {},
+                        )),
+                  ],
                 )),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -42,7 +59,7 @@ class EditProfileScreen extends StatelessWidget {
                 Expanded(
                   flex: 4,
                   child:TextFormField(
-                    initialValue:  " Name Name",
+                    initialValue:  auth.myUserDetails.name,
                     style: AppTextStyle.thinTitle18,
                     textAlign: TextAlign.start,
                   ),
@@ -68,7 +85,7 @@ class EditProfileScreen extends StatelessWidget {
                 Expanded(
                   flex: 4,
                   child: TextFormField(
-                    initialValue: "My Story Starts Where I'm Beginning to open my eyes! My Story Starts Where I'm Beginning to open my eyes! My Story Starts Where I'm Beginning to open my eyes!",
+                    initialValue:  auth.myUserDetails.bio,
                     style: AppTextStyle.thinTitle16,
                     maxLines: 5,
                     textAlign: TextAlign.start,
@@ -95,7 +112,7 @@ class EditProfileScreen extends StatelessWidget {
                 Expanded(
                   flex: 4,
                   child: TextFormField(
-                    initialValue: "linklinklinklinklinklinklinklinklink",
+                    initialValue:  auth.myUserDetails.channel,
                     style: AppTextStyle.thinTitle16,
                     textAlign: TextAlign.start,
                   ),
