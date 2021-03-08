@@ -172,6 +172,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return null;
                     }
                   },
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: true,
                   decoration: InputDecoration(
                     hintText: 'Password',
                     border: OutlineInputBorder(
@@ -198,6 +200,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return null;
                     }
                   },
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: true,
                   decoration: InputDecoration(
                     hintText: 'Confirm Password',
                     border: OutlineInputBorder(

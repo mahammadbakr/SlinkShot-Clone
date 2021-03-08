@@ -7,9 +7,10 @@ class MainButton extends StatelessWidget {
    String label;
    String icon;
    Color color;
+   Function onPressed;
 
 
-   MainButton({this.label, this.icon , this.color});
+   MainButton({this.label, this.icon , this.color,this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +22,12 @@ class MainButton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
+         icon!="null" ? Image.asset(
             icon,
             width: 18,
             height: 18,
             color: PaletteColors.mainBackground,
-          ),
+          ):SizedBox.shrink(),
           SizedBox(
             width: 6,
           ),
@@ -37,7 +38,7 @@ class MainButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(32),
       ),
-      onPressed: () {},
+      onPressed: onPressed,
     );
   }
 }

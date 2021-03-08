@@ -87,13 +87,11 @@ class _SignInScreenState extends State<SignInScreen> {
                 aspectRatio: 16 / 9,
                 viewportFraction: 0.8,
                 initialPage: 0,
-                // enableInfiniteScroll: true,
                 reverse: false,
                 autoPlay: true,
                 autoPlayInterval: Duration(seconds: 4),
                 autoPlayAnimationDuration: Duration(milliseconds: 1500),
                 autoPlayCurve: Curves.fastOutSlowIn,
-                // enlargeCenterPage: true,
                 scrollDirection: Axis.horizontal,
               ),
               items: imgList.map((i) {
@@ -145,6 +143,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         return null;
                       }
                     },
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: true,
                     decoration: InputDecoration(
                       hintText: 'Password',
                       border: OutlineInputBorder(

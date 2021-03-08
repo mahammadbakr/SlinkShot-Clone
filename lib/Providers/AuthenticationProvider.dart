@@ -7,6 +7,7 @@ import 'package:slinkshot_clone/Models/Skin.dart';
 import 'package:slinkshot_clone/Models/SlinkShot.dart';
 import 'package:slinkshot_clone/Models/User.dart';
 import 'package:slinkshot_clone/Models/UserDetails.dart';
+import 'package:collection/collection.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
   User myUser;
@@ -14,6 +15,7 @@ class AuthenticationProvider extends ChangeNotifier {
   Skin mySkin;
 
   List<dynamic> mySlinkSHotsList = [];
+  List<dynamic> mySkinList = [];
 
   bool isLoggedIn = false;
   final String registerUrl =
@@ -22,6 +24,10 @@ class AuthenticationProvider extends ChangeNotifier {
   final String checkUrl = "https://slinkshotclone.herokuapp.com/api/auth/check";
   final String getUserDetailsByIdUrl =
       "https://slinkshotclone.herokuapp.com/api/getUserDetailsById";
+  final String updateUserDetailsUrl =
+      "https://slinkshotclone.herokuapp.com/api/updateUserDetailsById";
+  final String addSkinForUserDetailsUrl =
+      "https://slinkshotclone.herokuapp.com/api/newSkinForUserDetails";
 
   void setLoginTrue() {
     isLoggedIn = true;
@@ -39,7 +45,7 @@ class AuthenticationProvider extends ChangeNotifier {
       "password": password,
     });
     if (response == null) {}
-    print(response);
+    // print(response);
 
     if (response["message"] == "registered successfully") {
       return true;
@@ -51,7 +57,7 @@ class AuthenticationProvider extends ChangeNotifier {
     var response = await postHTTP(
         url: loginUrl, body: {"username": username, "password": password});
     if (response == null) {}
-    print(response);
+    // print(response);
 
     if (response["message"] == "logged in successfully") {
       if (!await checkToken(token: response["token"], username: username)) {
@@ -73,10 +79,10 @@ class AuthenticationProvider extends ChangeNotifier {
       "x-access-token": token,
     });
     if (response == null) {}
-    print(response);
+    // print(response);
 
     if (response["success"]) {
-      print(response["info"]["_id"]);
+      // print(response["info"]["_id"]);
       myUser = new User(
           id: response["info"]["_id"], username: username, token: token);
 
@@ -96,19 +102,74 @@ class AuthenticationProvider extends ChangeNotifier {
     if (response == null) {
       return false;
     }
-    print(response);
+    // print(response);
 
     if (response["status"] == 200) {
       myUserDetails = UserDetails.fromJson(response["userDetails"]);
       mySkin=Skin.fromJson(myUserDetails.skin);
       mySlinkSHotsList =
           response["userDetails"]["slinkshots"].map((data) => SlinkShot.fromJson(data)).toList();
+      mySkinList =
+          response["userDetails"]["skins"].map((data) => Skin.fromJson(data)).toList();
       notifyListeners();
       return true;
     }
     return false;
   }
 
+  bool isSkinListContains(Skin skin){
+    if(mySkinList.isEmpty){
+      return false;
+    }
+
+    for (Skin e in mySkinList) {
+      if (e.id == skin.id) return true;
+    }
+    return false;
+
+  }
+
+
+  Future<bool> updateUserDetails(
+      {String id,String name, Map<String,dynamic> user, int wallet, Map<String,dynamic> skin, String bio, String channel, List<dynamic> followers, List<dynamic> slinkshots}) async {
+    var response = await postHTTP(url: updateUserDetailsUrl, body: {
+      "_id":id,
+      "name":name,
+      "user":user,
+      "wallet":wallet,
+      "skin":skin,
+      "bio":bio,
+      "channel":channel,
+      "followers":followers,
+      "slinkshots":slinkshots
+    });
+    if (response == null) {
+      return false;
+    }
+    print(response);
+
+    return true;
+  }
+
+  Future<bool> addSkinForUserDetails(
+      {String id, String skin}) async {
+    var response = await postHTTP(url: addSkinForUserDetailsUrl, body: {
+      "_id":id,
+      "skin":skin
+    });
+    if (response == null) {
+      return false;
+    }
+    print(response);
+
+    return true;
+  }
+
+
+
+
+
+  //save in to shared prefrences
 
 
   Future<void> addUserToSharedPreferences(

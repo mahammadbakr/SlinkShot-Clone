@@ -30,5 +30,6 @@ class AppIcons  {
   static String loading = 'assets/images/loading.gif';
   static String imageLoading = 'assets/images/imageLoading.png';
   static String slinkCoin = 'assets/images/slinkCoin.png';
+  static String spin = 'assets/images/spin.png';
 
 }

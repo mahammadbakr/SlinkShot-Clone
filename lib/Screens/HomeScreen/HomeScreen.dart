@@ -5,7 +5,7 @@ import 'package:slinkshot_clone/Constants/AppIcons.dart';
 import 'package:slinkshot_clone/Constants/ColorConstants.dart';
 import 'package:slinkshot_clone/Providers/AppSettingsProvider.dart';
 import 'package:slinkshot_clone/Providers/AuthenticationProvider.dart';
-import 'package:slinkshot_clone/Screens/HomeScreen/Tabs/HomeTab.dart';
+import 'package:slinkshot_clone/Screens/HomeScreen/Tabs/SlinkShotTab.dart';
 import 'package:slinkshot_clone/Screens/HomeScreen/Tabs/ProfileTab.dart';
 import 'package:slinkshot_clone/Screens/HomeScreen/Tabs/SearchTab.dart';
 import 'package:slinkshot_clone/Screens/HomeScreen/Tabs/SkinTab.dart';
@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   : homeState.getHomeTab().toString() == "1"
                       ? SearchTab()
                       : homeState.getHomeTab().toString() == "2"
-                          ? HomeTab()
+                          ? SlinkShotTab()
                           : ProfileTab()),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: ImageIcon(
               AssetImage(AppIcons.camera),
             ),
-            label: 'Home',
+            label: 'SlinkShot',
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(

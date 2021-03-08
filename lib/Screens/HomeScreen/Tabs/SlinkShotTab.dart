@@ -3,16 +3,12 @@ import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:slinkshot_clone/Components/MainButton.dart';
 import 'package:slinkshot_clone/Components/SlidingCard.dart';
 import 'package:slinkshot_clone/Constants/AppIcons.dart';
-import 'package:slinkshot_clone/Constants/AppTextStyle.dart';
 import 'package:slinkshot_clone/Constants/ColorConstants.dart';
-import 'package:slinkshot_clone/Models/SlinkShot.dart';
 import 'package:slinkshot_clone/Providers/OtherProvider.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class HomeTab extends StatelessWidget {
+class SlinkShotTab extends StatelessWidget {
   PageController controller = PageController();
   var currentPageValue = 0.0;
   double pageOffset = 0;
@@ -52,7 +48,7 @@ class HomeTab extends StatelessWidget {
                             Icons.add,
                             color: PaletteColors.mainBackground,
                           ),
-                          onPressed: () async {}),
+                          onPressed: ()=>Navigator.pushNamed(context, "/addSlinkShot")),
                     ],
                   ),
                 ),

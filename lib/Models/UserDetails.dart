@@ -9,6 +9,7 @@ class  UserDetails {
   final Map<String,dynamic> skin;
   final String bio;
   final String channel;
+  final int wallet;
   final List<dynamic>followers;
   final List<dynamic> slinkshots;
 
@@ -19,6 +20,7 @@ class  UserDetails {
         @required this.skin,
         @required this.bio,
         @required this.channel,
+        @required this.wallet,
         @required this.followers,
         @required this.slinkshots,
         });
@@ -30,6 +32,7 @@ class  UserDetails {
       skin: data["skin"],
     bio: data["bio"],
     channel: data["channel"],
+      wallet: data["wallet"],
     followers: data["followers"],
     slinkshots: data["slinkshots"]
      );
@@ -41,6 +44,7 @@ class  UserDetails {
     'skin': skin,
     'bio': bio,
     'channel': channel,
+    'wallet': wallet,
     'followers': followers,
     'slinkshots': slinkshots,
   };

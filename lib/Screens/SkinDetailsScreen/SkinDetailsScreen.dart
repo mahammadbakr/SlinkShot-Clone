@@ -1,24 +1,58 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:slinkshot_clone/Components/MainButton.dart';
+import 'package:provider/provider.dart';
+import 'package:slinkshot_clone/Components/CustomAlert.dart';
 import 'package:slinkshot_clone/Constants/AppIcons.dart';
 import 'package:slinkshot_clone/Constants/AppTextStyle.dart';
 import 'package:slinkshot_clone/Constants/ColorConstants.dart';
 import 'package:slinkshot_clone/Models/Skin.dart';
+import 'package:slinkshot_clone/Providers/AuthenticationProvider.dart';
 
 class SkinDetailsScreen extends StatelessWidget {
+  bool isBought;
+
+  void onSubmit(
+      {BuildContext context, Skin skin, AuthenticationProvider auth}) async {
+    if (isBought) {
+      warningAlert(
+          context: context,
+          label: "Sorry",
+          content: "You Already Bought this Skin !");
+      return;
+    }
+    if (auth.myUserDetails.wallet < skin.price) {
+      warningAlert(
+          context: context,
+          label: "Sorry",
+          content: "You don't have enough Slink Coins !");
+      return;
+    }
+    final bool status = await auth.addSkinForUserDetails(
+      id: auth.myUserDetails.id,
+      skin: skin.id,
+    );
+
+    if (status) {
+      warningAlert(
+          context: context,
+          label: "Success",
+          content: "Congrats You bought this Skin ");
+    } else {
+      warningAlert(
+          context: context,
+          label: "Warning",
+          content: "Skin can't add right now !");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    AuthenticationProvider auth =
+        Provider.of<AuthenticationProvider>(context, listen: false);
+
     final Skin skin = ModalRoute.of(context).settings.arguments;
+    isBought = auth.isSkinListContains(skin);
     return Scaffold(
-        // appBar: AppBar(
-        //   backgroundColor: PaletteColors.secondBackground,
-        //   centerTitle: true,
-        //   title: Image.asset(
-        //     AppIcons.title,
-        //     height: 44,
-        //   ),
-        // ),
         body: SafeArea(
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -68,23 +102,35 @@ class SkinDetailsScreen extends StatelessWidget {
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8,vertical: 3),
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: PaletteColors.buttonColor,
                       ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.asset(AppIcons.slinkCoin,width: 22,height: 22,),
-                          SizedBox(width: 4,),
-                          Text(
-                            skin.price.toString(),
-                            style: AppTextStyle.regularTitle20
-                                .copyWith(color: PaletteColors.mainBackground),
-                          ),
-                        ],
-                      ),
+                      child: isBought
+                          ? Text(
+                              "Bought",
+                              style: AppTextStyle.regularTitle20.copyWith(
+                                  color: PaletteColors.mainBackground),
+                            )
+                          : Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  AppIcons.slinkCoin,
+                                  width: 22,
+                                  height: 22,
+                                ),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                Text(
+                                  skin.price.toString(),
+                                  style: AppTextStyle.regularTitle20.copyWith(
+                                      color: PaletteColors.mainBackground),
+                                ),
+                              ],
+                            ),
                     )
                   ],
                 ),
@@ -137,7 +183,9 @@ class SkinDetailsScreen extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(32),
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          onSubmit(context: context, skin: skin, auth: auth);
+                        },
                       ),
                       SizedBox(
                         height: 10,

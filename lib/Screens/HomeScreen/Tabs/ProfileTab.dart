@@ -15,34 +15,43 @@ class ProfileTab extends StatelessWidget {
   Widget build(BuildContext context) {
     AuthenticationProvider auth =
         Provider.of<AuthenticationProvider>(context, listen: false);
-
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(vertical: 10),
       child: Column(
         children: [
-          Stack(
-            children: [
-              FadeInImage.assetNetwork(
-                placeholder: AppIcons.loading,
-                image:auth.mySkin.image,
-                height: 150,
-                width: 150,
-              ),
-              Positioned(
-                right: 2,top: 2,
-                  child: IconButton(
-                iconSize: 30,
-                icon: Icon(Icons.edit),
-                onPressed: () {},
-              )),
-            ],
+          FadeInImage.assetNetwork(
+            placeholder: AppIcons.loading,
+            image: auth.mySkin.image,
+            height: 150,
+            width: 150,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Align(alignment: Alignment.centerLeft, child: Row(
+              children: [
+                Text("Your Slink Coins:",style: AppTextStyle.boldTitle18,),
+                SizedBox(width: 8,),
+                Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: PaletteColors.buttonColor,
+                    ),child: Row(
+                      children: [
+                        Image.asset(AppIcons.slinkCoin,width: 20,height: 20,),
+                        SizedBox(width: 4,),
+                        Text(auth.myUserDetails.wallet.toString(),style: AppTextStyle.regularTitle16.copyWith(color: PaletteColors.mainBackground)),
+                      ],
+                    )),
+              ],
+            ),),
           ),
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: PaletteColors.yellowColorApp,
             ),
-            margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            margin: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
             padding: EdgeInsets.all(6),
             child: Text(
               auth.myUserDetails.bio,
@@ -62,12 +71,17 @@ class ProfileTab extends StatelessWidget {
           ProfileMenu(
             text: "My Skins",
             icon: AppIcons.skin2,
-            press: () {},
+            press: () =>Navigator.pushNamed(context, "/mySkins"),
           ),
           ProfileMenu(
             text: "My SlinkShots",
             icon: AppIcons.slinkImage,
-            press: () =>Navigator.pushNamed(context, "/mySlinkShots"),
+            press: () => Navigator.pushNamed(context, "/mySlinkShots"),
+          ),
+          ProfileMenu(
+            text: "Spin Wheel",
+            icon: AppIcons.spin,
+            press: ()=>Navigator.pushNamed(context, "/spinWheel"),
           ),
           ProfileMenu(
             text: "Notifications",
@@ -102,7 +116,7 @@ class ProfileMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
       child: FlatButton(
         padding: EdgeInsets.all(10),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
