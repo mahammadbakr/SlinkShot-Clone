@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:slinkshot_clone/Components/LoadingWidget.dart';
 import 'package:slinkshot_clone/Components/SkinWidget.dart';
 import 'package:slinkshot_clone/Components/StaticFunctions.dart';
 import 'package:slinkshot_clone/Constants/AppIcons.dart';
@@ -35,11 +36,7 @@ class MySkinsScreen extends StatelessWidget {
                   builder: (_, providerState, __) {
                 String id = providerState.myUserDetails.skin["_id"];
                 return providerState.mySkinList.isEmpty
-                    ? Center(
-                        child: Image.asset(
-                        AppIcons.loading,
-                        scale: 2,
-                      ))
+                    ? LoadingWidget()
                     : GridView.builder(
                         padding: EdgeInsets.all(12),
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(

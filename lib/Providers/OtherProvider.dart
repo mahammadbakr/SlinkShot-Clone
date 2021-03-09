@@ -19,12 +19,15 @@ class OtherProvider extends ChangeNotifier {
 
   List<dynamic> skinsList = [];
   List<dynamic> slinkshotsList = [];
+  List<dynamic> searchedSkinsList = [];
+  List<dynamic> searchedSlinkshotsList = [];
 
   Future<void> getAllSkins() async {
     var response = await postHTTP(url: getAllSkinsUrl, body: {});
     if (response == null) {}
     // print(response);
     skinsList = response["skins"].map((data) => Skin.fromJson(data)).toList();
+    searchedSkinsList = skinsList;
     notifyListeners();
   }
 
@@ -34,6 +37,7 @@ class OtherProvider extends ChangeNotifier {
     // print(response);
     slinkshotsList =
         response["slinkShots"].map((data) => SlinkShot.fromJson(data)).toList();
+    searchedSlinkshotsList = slinkshotsList;
     notifyListeners();
   }
 
@@ -66,8 +70,8 @@ class OtherProvider extends ChangeNotifier {
   Future<bool> updateSlinkshot(
       {String id,
       String name,
-        Map<String,dynamic> user,
-        Map<String,dynamic> userDetails,
+      Map<String, dynamic> user,
+      Map<String, dynamic> userDetails,
       String description,
       String videoUrl,
       int like,
@@ -90,33 +94,62 @@ class OtherProvider extends ChangeNotifier {
     return true;
   }
 
-  void addViewForSlinkshot(
-      {String id,
-        int viewNumber}) async {
-    var response = await postHTTP(url: addViewForSlinkshotUrl, body: {
-      "_id": id,
-      "viewNumber": viewNumber
-    });
-    if (response == null) {
-      print("response is nulll");
-    }
-    // print(response);
-
-  }
-
-  void addLikeForSlinkshot(
-      {String id,
-        int like}) async {
-    var response = await postHTTP(url: addLikeForSlinkshotUrl, body: {
-      "_id": id,
-      "like": like
-    });
+  void addViewForSlinkshot({String id, int viewNumber}) async {
+    var response = await postHTTP(
+        url: addViewForSlinkshotUrl,
+        body: {"_id": id, "viewNumber": viewNumber});
     if (response == null) {
       print("response is nulll");
     }
     // print(response);
   }
 
+  void addLikeForSlinkshot({String id, int like}) async {
+    var response = await postHTTP(
+        url: addLikeForSlinkshotUrl, body: {"_id": id, "like": like});
+    if (response == null) {
+      print("response is nulll");
+    }
+    // print(response);
+  }
 
+  void searchForSlinkShots({String text}) {
+    if (text == "" || text == null) {
+      searchedSlinkshotsList = slinkshotsList;
+    } else {
+      var list = searchedSlinkshotsList.where((b) {
+        return b.name.contains(text);
+      }).toList();
 
+      if(list.isEmpty){
+        searchedSlinkshotsList = slinkshotsList;
+        notifyListeners();
+      }else{
+        searchedSlinkshotsList=list;
+      }
+
+    }
+
+    notifyListeners();
+  }
+
+  void searchForSkins({String text}) {
+    if (text == "" || text == null) {
+      searchedSkinsList = skinsList;
+    } else {
+
+     var  list = searchedSkinsList.where((b) {
+        return b.name.contains(text);
+      }).toList();
+     if(list.isEmpty){
+       searchedSkinsList = skinsList;
+       notifyListeners();
+     }else{
+       searchedSkinsList=list;
+     }
+
+    }
+
+    notifyListeners();
+  }
 }

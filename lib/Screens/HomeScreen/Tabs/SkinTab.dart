@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:slinkshot_clone/Components/GradientBorder.dart';
+import 'package:slinkshot_clone/Components/LoadingWidget.dart';
 import 'package:slinkshot_clone/Components/SkinWidget.dart';
 import 'package:slinkshot_clone/Constants/AppIcons.dart';
 import 'package:slinkshot_clone/Constants/AppTextStyle.dart';
@@ -18,7 +19,7 @@ class SkinTab extends StatelessWidget {
 
     return Consumer<OtherProvider>(builder: (_, providerState, __) {
       return providerState.skinsList.isEmpty
-          ? Center(child: Image.asset(AppIcons.loading,scale: 2, ))
+          ? LoadingWidget()
           : GridView.builder(
               padding: EdgeInsets.all(12),
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(

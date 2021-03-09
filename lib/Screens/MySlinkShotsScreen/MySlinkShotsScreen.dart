@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:slinkshot_clone/Components/LoadingWidget.dart';
 import 'package:slinkshot_clone/Components/SlidingCard.dart';
 import 'package:slinkshot_clone/Constants/AppIcons.dart';
 import 'package:slinkshot_clone/Constants/ColorConstants.dart';
@@ -44,11 +45,7 @@ class _MySlinkShotsScreenState extends State<MySlinkShotsScreen> {
                         )),
                     Expanded(
                       flex: 20,
-                      child: Center(
-                          child: Image.asset(
-                        AppIcons.loading,
-                        scale: 2,
-                      )),
+                      child: LoadingWidget()
                     ),
                   ],
                 )

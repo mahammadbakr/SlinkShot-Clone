@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:slinkshot_clone/Components/LoadingWidget.dart';
 import 'package:slinkshot_clone/Components/SkinWidget.dart';
 import 'package:slinkshot_clone/Constants/AppIcons.dart';
 import 'package:slinkshot_clone/Constants/AppTextStyle.dart';
@@ -24,7 +25,7 @@ class _SearchTabState extends State<SearchTab> {
         controller: YoutubePlayerController(
           initialVideoId: vidId,
           flags: YoutubePlayerFlags(
-            mute: false,
+            mute: true,
             autoPlay: false,
           ),
         ),
@@ -37,6 +38,8 @@ class _SearchTabState extends State<SearchTab> {
       builder: (context, player) {
         return player;
       });
+
+  int noOfBranches;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +54,15 @@ class _SearchTabState extends State<SearchTab> {
                   child: Column(
                     children: [
                       TextFormField(
+                        onChanged: (text) {
+                          setState(() {
+                            if (isSlink) {
+                              providerState.searchForSlinkShots(text: text);
+                            } else {
+                              providerState.searchForSkins(text: text);
+                            }
+                          });
+                        },
                         decoration: InputDecoration(
                           hintText: 'Write here',
                           border: OutlineInputBorder(
@@ -134,169 +146,171 @@ class _SearchTabState extends State<SearchTab> {
                 ),
               ),
               isSlink
-                  ? SliverPadding(
-                      padding: EdgeInsets.all(12),
-                      sliver: providerState.skinsList.isEmpty
-                          ? Center(
-                              child: Image.asset(
-                              AppIcons.loading,
-                              scale: 2,
-                            ))
-                          : SliverList(
-                              delegate: SliverChildListDelegate([
-                              Column(
-                                children: [
-                                  Container(
-                                    child: ListView.builder(
-                                        itemCount:
-                                            providerState.slinkshotsList.length,
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return Container(
-                                            margin: EdgeInsets.all(8),
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            height: 80,
-                                            decoration: new BoxDecoration(
+                  ? providerState.searchedSlinkshotsList.isEmpty
+                      ? SliverPadding(
+                          padding: EdgeInsets.all(12),
+                          sliver: LoadingWidget())
+                      : SliverList(
+                          delegate: SliverChildListDelegate([
+                          Column(
+                            children: [
+                              Container(
+                                child: ListView.builder(
+                                    itemCount: providerState
+                                        .searchedSlinkshotsList.length,
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Container(
+                                        margin: EdgeInsets.all(8),
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 80,
+                                        decoration: new BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20.0),
+                                          color: PaletteColors.secondBackground,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                blurRadius: 10,
+                                                color: Colors.black26,
+                                                offset: Offset(0, 1.2))
+                                          ],
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            ClipRRect(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
-                                              color: PaletteColors
-                                                  .secondBackground,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    blurRadius: 10,
-                                                    color: Colors.black26,
-                                                    offset: Offset(0, 1.2))
-                                              ],
+                                                  BorderRadius.circular(12),
+                                              child: Container(
+                                                  height: 80,
+                                                  width: 140,
+                                                  child: getYoutubeVideo(
+                                                      providerState
+                                                          .searchedSlinkshotsList[
+                                                              index]
+                                                          .videoUrl
+                                                          .split("v=")[1])),
                                             ),
-                                            child: Row(
-                                              children: [
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                  child: Container(
-                                                      height: 80,
-                                                      width: 140,
-                                                      child: getYoutubeVideo(
-                                                          "etqi9VQVr8A")),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(4.0),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        providerState
-                                                            .slinkshotsList[
-                                                                index]
-                                                            .name,
-                                                        style: AppTextStyle
-                                                            .boldTitle18,
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                horizontal: 4),
-                                                        child: Text(
-                                                          smallSentence(
-                                                              providerState
-                                                                  .slinkshotsList[
-                                                                      index]
-                                                                  .description),
-                                                          maxLines: 1,
-                                                          softWrap: false,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: AppTextStyle
-                                                              .regularTitle12,
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(3.0),
-                                                        child: Row(
-                                                          children: [
-                                                            Text(
-                                                                providerState
-                                                                    .slinkshotsList[
-                                                                        index]
-                                                                    .like
-                                                                    .toString(),
-                                                                style: AppTextStyle
-                                                                    .regularTitle12
-                                                                    .copyWith(
-                                                                        color: PaletteColors
-                                                                            .blackAppColor)),
-                                                            SizedBox(
-                                                              width: 4,
-                                                            ),
-                                                            Image.asset(
-                                                              AppIcons.love,
-                                                              width: 22,
-                                                              height: 22,
-                                                            ),
-                                                            SizedBox(
-                                                              width: 15,
-                                                            ),
-                                                            Text("0",
-                                                                style: AppTextStyle
-                                                                    .regularTitle12
-                                                                    .copyWith(
-                                                                        color: PaletteColors
-                                                                            .blackAppColor)),
-                                                            SizedBox(
-                                                              width: 4,
-                                                            ),
-                                                            Image.asset(
-                                                              AppIcons.comment,
-                                                              width: 22,
-                                                              height: 22,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      )
-                                                    ],
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(4.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    providerState
+                                                        .searchedSlinkshotsList[
+                                                            index]
+                                                        .name,
+                                                    style: AppTextStyle
+                                                        .boldTitle18,
                                                   ),
-                                                ),
-                                              ],
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 4),
+                                                    child: Text(
+                                                      smallSentence(providerState
+                                                          .searchedSlinkshotsList[
+                                                              index]
+                                                          .description),
+                                                      maxLines: 1,
+                                                      softWrap: false,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: AppTextStyle
+                                                          .regularTitle12,
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            3.0),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                            providerState
+                                                                .searchedSlinkshotsList[
+                                                                    index]
+                                                                .like
+                                                                .toString(),
+                                                            style: AppTextStyle
+                                                                .regularTitle12
+                                                                .copyWith(
+                                                                    color: PaletteColors
+                                                                        .blackAppColor)),
+                                                        SizedBox(
+                                                          width: 4,
+                                                        ),
+                                                        Image.asset(
+                                                          AppIcons.love,
+                                                          width: 22,
+                                                          height: 22,
+                                                        ),
+                                                        SizedBox(
+                                                          width: 15,
+                                                        ),
+                                                        Text("0",
+                                                            style: AppTextStyle
+                                                                .regularTitle12
+                                                                .copyWith(
+                                                                    color: PaletteColors
+                                                                        .blackAppColor)),
+                                                        SizedBox(
+                                                          width: 4,
+                                                        ),
+                                                        Image.asset(
+                                                          AppIcons.comment,
+                                                          width: 22,
+                                                          height: 22,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
                                             ),
-                                          );
-                                        }),
-                                  ),
-                                ],
-                              )
-                            ])),
-                    )
-                  : SliverPadding(
-                      padding: EdgeInsets.all(8),
-                      sliver: SliverGrid(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 2.2 / 2,
-                          mainAxisSpacing: 1,
-                          crossAxisSpacing: 1,
-                        ),
-                        delegate: SliverChildBuilderDelegate(
-                            (context, index) => SkinWidget(
-                                  mContext: context,
-                                  skin: providerState.skinsList[index],
-                                  bgColor: PaletteColors.secondBackground,
-                                  onPressed: () => Navigator.pushNamed(
-                                      context, '/skinDetails',
-                                      arguments:
-                                          providerState.skinsList[index]),
-                                ),
-                            childCount: providerState.skinsList.length),
-                      ),
-                    )
+                                          ],
+                                        ),
+                                      );
+                                    }),
+                              ),
+                            ],
+                          )
+                        ]))
+                  : providerState.searchedSkinsList.isEmpty
+                      ? SliverPadding(
+                          padding: EdgeInsets.all(10),
+                          sliver:LoadingWidget()
+                        )
+                      : SliverPadding(
+                          padding: EdgeInsets.all(8),
+                          sliver: SliverGrid(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 2.2 / 2,
+                              mainAxisSpacing: 1,
+                              crossAxisSpacing: 1,
+                            ),
+                            delegate: SliverChildBuilderDelegate(
+                                (context, index) => SkinWidget(
+                                      mContext: context,
+                                      skin: providerState
+                                          .searchedSkinsList[index],
+                                      bgColor: PaletteColors.secondBackground,
+                                      onPressed: () => Navigator.pushNamed(
+                                          context, '/skinDetails',
+                                          arguments: providerState
+                                              .searchedSkinsList[index]),
+                                    ),
+                                childCount:
+                                    providerState.searchedSkinsList.length),
+                          ),
+                        )
             ],
           ),
         ),

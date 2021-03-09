@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:slinkshot_clone/Components/MainButton.dart';
 import 'package:slinkshot_clone/Components/StaticFunctions.dart';
 import 'package:slinkshot_clone/Constants/AppIcons.dart';
 import 'package:slinkshot_clone/Constants/AppTextStyle.dart';
@@ -104,6 +105,16 @@ class UserDetailsScreen extends StatelessWidget {
                 userDetails["bio"],
                 textAlign: TextAlign.justify,
                 style: AppTextStyle.regularTitle16,
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: MainButton(
+                label: "Follow",
+                color: PaletteColors.blueColorApp,
+                icon: "null",
+                onPressed: () {warningAlert(context: context,label: "We are Sorry",content: "Sorry it is not Active right now ...");},
               ),
             ),
           ],

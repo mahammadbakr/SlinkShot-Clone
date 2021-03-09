@@ -202,7 +202,7 @@ class AuthenticationProvider extends ChangeNotifier {
     if (response == null) {
       return false;
     }
-    // print(response);
+    print("edittt wallet: $response");
 
     return true;
   }

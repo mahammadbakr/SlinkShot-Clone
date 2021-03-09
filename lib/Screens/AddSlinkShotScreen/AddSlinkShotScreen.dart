@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:slinkshot_clone/Components/MainButton.dart';
+import 'package:slinkshot_clone/Components/MainTextField.dart';
 import 'package:slinkshot_clone/Constants/AppIcons.dart';
 import 'package:slinkshot_clone/Constants/AppTextStyle.dart';
 import 'package:slinkshot_clone/Constants/ColorConstants.dart';
@@ -33,7 +34,7 @@ class _AddSlinkShotScreenState extends State<AddSlinkShotScreen> {
     other.OtherProvider provider =
         Provider.of<other.OtherProvider>(context, listen: false);
 
-   final bool status= await  provider.addSlinkshot(
+    final bool status = await provider.addSlinkshot(
         name: dataMap["name"],
         description: dataMap["description"],
         videoUrl: dataMap["videoUrl"],
@@ -104,6 +105,12 @@ class _AddSlinkShotScreenState extends State<AddSlinkShotScreen> {
                     ),
                   ),
                 ),
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Write Details of your new Slink Shot  ",style: AppTextStyle.boldTitle18.copyWith(color: PaletteColors.blueColorApp),),
+                ),
+                SizedBox(height: 10,),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -118,7 +125,7 @@ class _AddSlinkShotScreenState extends State<AddSlinkShotScreen> {
                     ),
                     Expanded(
                       flex: 4,
-                      child: TextFormField(
+                      child: MainTextField(
                         onChanged: (text) {
                           dataMap["name"] = text;
                         },
@@ -129,13 +136,9 @@ class _AddSlinkShotScreenState extends State<AddSlinkShotScreen> {
                             return null;
                           }
                         },
-                        style: AppTextStyle.thinTitle18,
-                        textAlign: TextAlign.start,
-                        decoration: InputDecoration(
-                          hintText: 'title',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                        ),
+                        hint: 'title',
+                        icon: AppIcons.slinkImage,
+                        isPassword: false,
                       ),
                     ),
                   ],
@@ -168,7 +171,7 @@ class _AddSlinkShotScreenState extends State<AddSlinkShotScreen> {
                             return null;
                           }
                         },
-                        style: AppTextStyle.thinTitle16,
+                        style: AppTextStyle.regularTitle16,
                         maxLines: 5,
                         textAlign: TextAlign.start,
                         decoration: InputDecoration(
@@ -196,25 +199,20 @@ class _AddSlinkShotScreenState extends State<AddSlinkShotScreen> {
                     ),
                     Expanded(
                       flex: 4,
-                      child: TextFormField(
-                        onChanged: (text) {
-                          dataMap["videoUrl"] = text;
-                        },
-                        validator: (text) {
-                          if (text.length < 4) {
-                            return "Video Url is not valid";
-                          } else {
-                            return null;
-                          }
-                        },
-                        style: AppTextStyle.thinTitle16,
-                        textAlign: TextAlign.start,
-                        decoration: InputDecoration(
-                          hintText: 'video url (only youtube)',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                        ),
-                      ),
+                      child: MainTextField(
+                          onChanged: (text) {
+                            dataMap["videoUrl"] = text;
+                          },
+                          validator: (text) {
+                            if (text.length < 4) {
+                              return "Video Url is not valid";
+                            } else {
+                              return null;
+                            }
+                          },
+                          hint: 'video url (only youtube)',
+                          icon: AppIcons.camera,
+                          isPassword: false),
                     ),
                   ],
                 ),

@@ -27,15 +27,18 @@ class SkinDetailsScreen extends StatelessWidget {
           content: "You don't have enough Slink Coins !");
       return;
     }
-    final bool status = await auth.addSkinForUserDetails(
-      id: auth.myUserDetails.id,
-      skin: skin.id,
-    );
 
     final bool status2 = await auth.editWalletForUserDetails(
       id: auth.myUserDetails.id,
       wallet: auth.myUserDetails.wallet-skin.price,
     );
+
+    final bool status = await auth.addSkinForUserDetails(
+      id: auth.myUserDetails.id,
+      skin: skin.id,
+    );
+
+
 
     if (status && status2) {
 
@@ -92,12 +95,8 @@ class SkinDetailsScreen extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                // decoration: BoxDecoration(
-                //   borderRadius: BorderRadius.circular(15),
-                //   color: PaletteColors.yellowColorApp,
-                // ),
-                margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                margin: EdgeInsets.symmetric(horizontal: 3, vertical: 3),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -146,6 +145,7 @@ class SkinDetailsScreen extends StatelessWidget {
               flex: 10,
               child: Container(
                 width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: PaletteColors.yellowColorApp,
@@ -159,7 +159,7 @@ class SkinDetailsScreen extends StatelessWidget {
                         textAlign: TextAlign.justify,
                         maxLines: 30,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.regularTitle18,
+                        style: AppTextStyle.regularTitle14,
                       ),
                       SizedBox(
                         height: 10,

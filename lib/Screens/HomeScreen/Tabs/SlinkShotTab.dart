@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:slinkshot_clone/Components/LoadingWidget.dart';
 import 'package:slinkshot_clone/Components/SlidingCard.dart';
 import 'package:slinkshot_clone/Constants/AppIcons.dart';
 import 'package:slinkshot_clone/Constants/ColorConstants.dart';
@@ -18,11 +19,7 @@ class SlinkShotTab extends StatelessWidget {
     return Consumer<OtherProvider>(builder: (_, providerState, __) {
       print("length${providerState.slinkshotsList.length}");
       return providerState.slinkshotsList.isEmpty
-          ? Center(
-              child: Image.asset(
-              AppIcons.loading,
-              scale: 2,
-            ))
+          ? LoadingWidget()
           : Stack(
               children: [
                 PageView.builder(

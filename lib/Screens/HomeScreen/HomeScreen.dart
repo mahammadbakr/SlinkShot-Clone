@@ -16,6 +16,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+   GlobalKey<ScaffoldState> _scaffoldKey ;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _scaffoldKey = new  GlobalKey<ScaffoldState>();
+
+  }
   @override
   Widget build(BuildContext context) {
     final authProvider =
@@ -23,7 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
     final settingsProvider =
         Provider.of<AppSettingsProvider>(context, listen: false);
 
+
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: PaletteColors.secondBackground,
         centerTitle: true,

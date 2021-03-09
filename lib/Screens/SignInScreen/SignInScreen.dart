@@ -3,7 +3,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:slinkshot_clone/Components/LoadingWidget.dart';
 import 'package:slinkshot_clone/Components/MainButton.dart';
+import 'package:slinkshot_clone/Components/MainTextField.dart';
 import 'package:slinkshot_clone/Constants/AppIcons.dart';
 import 'package:slinkshot_clone/Constants/AppTextStyle.dart';
 import 'package:slinkshot_clone/Constants/ColorConstants.dart';
@@ -91,129 +93,126 @@ class _SignInScreenState extends State<SignInScreen> {
         key: _formKey,
         child: Stack(
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CarouselSlider(
-                  options: CarouselOptions(
-                    height: 300,
-                    aspectRatio: 16 / 9,
-                    viewportFraction: 0.8,
-                    initialPage: 0,
-                    reverse: false,
-                    autoPlay: true,
-                    autoPlayInterval: Duration(seconds: 4),
-                    autoPlayAnimationDuration: Duration(milliseconds: 1500),
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    scrollDirection: Axis.horizontal,
-                  ),
-                  items: imgList.map((i) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return Image.asset(i);
-                      },
-                    );
-                  }).toList(),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        onChanged: (text) {
-                          authMap["username"] = text;
-                        },
-                        validator: (text) {
-                          if (text.length < 4) {
-                            return "username not valid";
-                          } else {
-                            return null;
-                          }
-                        },
-                        decoration: InputDecoration(
-                          hintText: 'User Name',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                          suffixIcon: ImageIcon(
-                            AssetImage(AppIcons.username),
+            Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CarouselSlider(
+                      options: CarouselOptions(
+                        height: 300,
+                        aspectRatio: 16 / 9,
+                        viewportFraction: 0.8,
+                        initialPage: 0,
+                        reverse: false,
+                        autoPlay: true,
+                        autoPlayInterval: Duration(seconds: 4),
+                        autoPlayAnimationDuration: Duration(milliseconds: 1500),
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        scrollDirection: Axis.horizontal,
+                      ),
+                      items: imgList.map((i) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return Image.asset(i);
+                          },
+                        );
+                      }).toList(),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 25),
+                      child: Column(
+                        children: [
+
+                          MainTextField(
+                            onChanged: (text) {
+                              authMap["username"] = text;
+                            },
+                            validator: (text) {
+                              if (text.length < 4) {
+                                return "username not valid";
+                              } else {
+                                return null;
+                              }
+                            },
+                            hint:'User Name' ,
+                            icon: AppIcons.username,
+                              isPassword:false
+
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        onChanged: (text) {
-                          authMap["password"] = text;
-                        },
-                        validator: (text) {
-                          if (text.length < 4) {
-                            return "password not valid";
-                          } else {
-                            return null;
-                          }
-                        },
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: 'Password',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                          suffixIcon: ImageIcon(
-                            AssetImage(AppIcons.password),
+
+                          SizedBox(
+                            height: 10,
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Row(
-                          children: [
-                            MainButton(
-                              label: "Sign In",
-                              color: PaletteColors.blueColorApp,
-                              icon: "null",
-                              onPressed:onSubmit,
-                            ),
-                            Spacer(),
-                            FlatButton(
-                              height: 40,
-                              // color: PaletteColors.yellowColorApp,
-                              onPressed: () {
-                                Navigator.pushNamed(context, "/signUp");
-                              },
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Haven't Account ? ",
-                                    style: AppTextStyle.regularTitle10.copyWith(
-                                        color: PaletteColors.blackAppColor
-                                            .withOpacity(0.8)),
+
+                          MainTextField(
+                            onChanged: (text) {
+                              authMap["password"] = text;
+                            },
+                            validator: (text) {
+                              if (text.length < 5) {
+                                return "password not valid";
+                              } else {
+                                return null;
+                              }
+                            },
+                            hint:'Password' ,
+                            icon: AppIcons.password,
+                            isPassword:true
+                          ),
+
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: Row(
+                              children: [
+                                MainButton(
+                                  label: "Sign In",
+                                  color: PaletteColors.blueColorApp,
+                                  icon: "null",
+                                  onPressed:onSubmit,
+                                ),
+                                Spacer(),
+                                FlatButton(
+                                  height: 40,
+                                  // color: PaletteColors.yellowColorApp,
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, "/signUp");
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Haven't Account ? ",
+                                        style: AppTextStyle.regularTitle10.copyWith(
+                                            color: PaletteColors.blackAppColor
+                                                .withOpacity(0.8)),
+                                      ),
+                                      Text(
+                                        "SignUp",
+                                        style: AppTextStyle.regularTitle14
+                                            .copyWith(color: PaletteColors.blueColorApp),
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    "SignUp",
-                                    style: AppTextStyle.regularTitle14
-                                        .copyWith(color: PaletteColors.blueColorApp),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
             
-          isLoading?  Center(child: Image.asset(AppIcons.loading),):SizedBox.shrink()
+          isLoading?  LoadingWidget():SizedBox.shrink()
           ],
         ),
       ),
