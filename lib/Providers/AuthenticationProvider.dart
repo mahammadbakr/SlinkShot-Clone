@@ -28,6 +28,11 @@ class AuthenticationProvider extends ChangeNotifier {
       "https://slinkshotclone.herokuapp.com/api/updateUserDetailsById";
   final String addSkinForUserDetailsUrl =
       "https://slinkshotclone.herokuapp.com/api/newSkinForUserDetails";
+  final String addUserDetailsUrl =
+      "https://slinkshotclone.herokuapp.com/api/newUserDetails";
+  final String editWalletForUserDetailsUrl =
+      "https://slinkshotclone.herokuapp.com/api/editWalletForUserDetailsById";
+
 
   void setLoginTrue() {
     isLoggedIn = true;
@@ -46,12 +51,34 @@ class AuthenticationProvider extends ChangeNotifier {
     });
     if (response == null) {}
     // print(response);
+    if (response["message"] == "registered successfully") {
+      await addUserDetails(username: username,user:response["id"] );
+
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> addUserDetails({String username,String user}) async {
+    var response = await postHTTP(url: addUserDetailsUrl, body: {
+      "user":user,
+      "name":username,
+      "wallet":400,
+      "skin":"6042989fd233470015e4e30b",
+      "bio":"Your Description Here - Dummy Text ...",
+      "followers":[],
+      "skins":[],
+      "slinkshots":[]
+    });
+    if (response == null) {}
+    // print(response);
 
     if (response["message"] == "registered successfully") {
       return true;
     }
     return false;
   }
+
 
   Future<bool> login({String username, String password}) async {
     var response = await postHTTP(
@@ -165,6 +192,20 @@ class AuthenticationProvider extends ChangeNotifier {
     return true;
   }
 
+
+  Future<bool> editWalletForUserDetails(
+      {String id, int wallet}) async {
+    var response = await postHTTP(url: editWalletForUserDetailsUrl, body: {
+      "_id":id,
+      "wallet":wallet
+    });
+    if (response == null) {
+      return false;
+    }
+    // print(response);
+
+    return true;
+  }
 
 
 

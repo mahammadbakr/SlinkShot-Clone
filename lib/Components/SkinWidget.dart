@@ -9,16 +9,15 @@ class SkinWidget extends StatelessWidget {
   final BuildContext mContext;
   final Skin skin;
   final Color bgColor;
+  final Function onPressed;
 
 
-  SkinWidget({this.mContext, this.skin, this.bgColor});
+  SkinWidget({this.mContext, this.skin, this.bgColor,this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.pushNamed(mContext, '/skinDetails', arguments: skin);
-      },
+      onTap:onPressed,
       child: Column(
         children: [
           Expanded(
@@ -29,7 +28,7 @@ class SkinWidget extends StatelessWidget {
                     AppIcons.logoBackground,
                     width: 130,
                     height: 130,
-                    color: PaletteColors.blueColorApp,
+                    color: bgColor,
                   ),
                 ),
                 Center(

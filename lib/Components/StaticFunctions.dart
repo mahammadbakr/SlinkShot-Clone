@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slinkshot_clone/Constants/AppTextStyle.dart';
 import 'package:slinkshot_clone/Constants/ColorConstants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 warningAlert({BuildContext context, String label, String content }) {
   return showDialog(
@@ -31,4 +32,43 @@ warningAlert({BuildContext context, String label, String content }) {
       ],
     ),
   );
+}
+
+askingAlert({BuildContext context,String label,String content,String labelBtn,Function onClickBtn }) {
+
+  // set up the buttons
+  Widget cancelButton = FlatButton(
+    child: Text("Cancel"),
+    onPressed: ()=>Navigator.pop(context),
+  );
+  Widget continueButton = FlatButton(
+    child: Text(labelBtn),
+    onPressed:  onClickBtn,
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text(label),
+    content: Text(content),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+lunchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
 }

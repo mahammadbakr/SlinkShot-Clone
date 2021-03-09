@@ -12,6 +12,10 @@ class OtherProvider extends ChangeNotifier {
       "https://slinkshotclone.herokuapp.com/api/newSlinkShot";
   final String updateSlinkshotUrl =
       "https://slinkshotclone.herokuapp.com/api/updateSlinkShotById";
+  final String addViewForSlinkshotUrl =
+      "https://slinkshotclone.herokuapp.com/api/addViewForSlinkShotById";
+  final String addLikeForSlinkshotUrl =
+      "https://slinkshotclone.herokuapp.com/api/addLikeForSlinkShotById";
 
   List<dynamic> skinsList = [];
   List<dynamic> slinkshotsList = [];
@@ -85,4 +89,34 @@ class OtherProvider extends ChangeNotifier {
 
     return true;
   }
+
+  void addViewForSlinkshot(
+      {String id,
+        int viewNumber}) async {
+    var response = await postHTTP(url: addViewForSlinkshotUrl, body: {
+      "_id": id,
+      "viewNumber": viewNumber
+    });
+    if (response == null) {
+      print("response is nulll");
+    }
+    // print(response);
+
+  }
+
+  void addLikeForSlinkshot(
+      {String id,
+        int like}) async {
+    var response = await postHTTP(url: addLikeForSlinkshotUrl, body: {
+      "_id": id,
+      "like": like
+    });
+    if (response == null) {
+      print("response is nulll");
+    }
+    // print(response);
+  }
+
+
+
 }

@@ -31,5 +31,6 @@ class AppIcons  {
   static String imageLoading = 'assets/images/imageLoading.png';
   static String slinkCoin = 'assets/images/slinkCoin.png';
   static String spin = 'assets/images/spin.png';
+  static String youtube = 'assets/images/youtube.png';
 
 }

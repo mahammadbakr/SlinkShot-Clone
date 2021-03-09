@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:slinkshot_clone/Components/CustomAlert.dart';
+import 'package:slinkshot_clone/Components/StaticFunctions.dart';
 import 'package:slinkshot_clone/Constants/AppIcons.dart';
 import 'package:slinkshot_clone/Constants/AppTextStyle.dart';
 import 'package:slinkshot_clone/Constants/ColorConstants.dart';
@@ -32,7 +32,13 @@ class SkinDetailsScreen extends StatelessWidget {
       skin: skin.id,
     );
 
-    if (status) {
+    final bool status2 = await auth.editWalletForUserDetails(
+      id: auth.myUserDetails.id,
+      wallet: auth.myUserDetails.wallet-skin.price,
+    );
+
+    if (status && status2) {
+
       warningAlert(
           context: context,
           label: "Success",
@@ -105,7 +111,7 @@ class SkinDetailsScreen extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: PaletteColors.buttonColor,
+                        color: PaletteColors.blackAppColor,
                       ),
                       child: isBought
                           ? Text(
@@ -153,7 +159,7 @@ class SkinDetailsScreen extends StatelessWidget {
                         textAlign: TextAlign.justify,
                         maxLines: 30,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.thinTitle18,
+                        style: AppTextStyle.regularTitle18,
                       ),
                       SizedBox(
                         height: 10,

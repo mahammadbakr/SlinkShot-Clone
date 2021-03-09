@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinning_wheel/flutter_spinning_wheel.dart';
 import 'package:slinkshot_clone/Constants/AppIcons.dart';
+import 'package:slinkshot_clone/Constants/ColorConstants.dart';
 
 class SpinWheelScreen extends StatelessWidget {
   final StreamController _dividerController = StreamController<int>();
@@ -16,8 +17,8 @@ class SpinWheelScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Color(0xffDDC3FF), elevation: 0.0),
-      backgroundColor: Color(0xffDDC3FF),
+      appBar: AppBar(backgroundColor: PaletteColors.mainAppColor, elevation: 0.0),
+      backgroundColor: PaletteColors.mainAppColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

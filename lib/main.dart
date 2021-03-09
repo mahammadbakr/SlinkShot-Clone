@@ -10,6 +10,7 @@ import 'package:slinkshot_clone/Screens/SignInScreen/SignInScreen.dart';
 import 'package:slinkshot_clone/Screens/SignUpScreen/SignUpScreen.dart';
 import 'package:slinkshot_clone/Screens/SkinDetailsScreen/SkinDetailsScreen.dart';
 import 'package:slinkshot_clone/Screens/SpinWheelScreen/SpinWheelScreen.dart';
+import 'package:slinkshot_clone/Screens/UserDetailsScreen/UserDetailsScreen.dart';
 import 'Constants/ColorConstants.dart';
 import 'Helper/connectivity_status.dart';
 import 'Providers/AuthenticationProvider.dart';
@@ -77,6 +78,7 @@ class MyApp extends StatelessWidget {
         '/addSlinkShot': (context) => AddSlinkShotScreen(),
         '/mySkins': (context) => MySkinsScreen(),
         '/spinWheel': (context) => SpinWheelScreen(),
+        '/userDetails': (context) => UserDetailsScreen(),
       },
     );
   }

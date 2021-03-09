@@ -54,36 +54,16 @@ class _MySlinkShotsScreenState extends State<MySlinkShotsScreen> {
                 )
               : Stack(
                   children: [
-                    Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.arrow_back_ios,
-                                color: PaletteColors.blackAppColor,
-                              ),
-                              onPressed: () => Navigator.pop(context),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: PageView.builder(
-                            controller: controller,
-                            itemBuilder: (BuildContext ctx, index) {
-                              return SlidingCard(
-                                slinkShot:
-                                    providerState.mySlinkSHotsList[index],
-                                offset: pageOffset,
-                              );
-                            },
-                            itemCount: providerState.mySlinkSHotsList.length,
-                            scrollDirection: Axis.vertical,
-                          ),
-                        ),
-                      ],
+                    PageView.builder(
+                      controller: controller,
+                      itemBuilder: (BuildContext ctx, index) {
+                        return SlidingCard(
+                          slinkShot: providerState.mySlinkSHotsList[index],
+                          offset: pageOffset,
+                        );
+                      },
+                      itemCount: providerState.mySlinkSHotsList.length,
+                      scrollDirection: Axis.vertical,
                     ),
                     Positioned(
                       bottom: 10,

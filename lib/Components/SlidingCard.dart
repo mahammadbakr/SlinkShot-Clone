@@ -1,6 +1,9 @@
-
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import 'package:slinkshot_clone/Models/SlinkShot.dart';
+import 'package:slinkshot_clone/Models/UserDetails.dart';
+import 'package:slinkshot_clone/Providers/AuthenticationProvider.dart';
+import 'package:slinkshot_clone/Providers/OtherProvider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'dart:math' as math;
 
@@ -70,6 +73,13 @@ class _SlidingCardState extends State<SlidingCard> {
   @override
   Widget build(BuildContext context) {
     double gauss = math.exp(-(math.pow((widget.offset.abs() - 0.5), 2) / 0.08));
+    OtherProvider provider = Provider.of<OtherProvider>(context, listen: false);
+    provider.addViewForSlinkshot(
+        id: widget.slinkShot.id, viewNumber: widget.slinkShot.viewNumber + 1);
+    String image = provider
+        .getSkinsById(widget.slinkShot.userDetails["skin"].toString())
+        .image;
+
     return Transform.translate(
       offset: Offset(-32 * gauss * widget.offset.sign, 0),
       child: Container(
@@ -78,7 +88,7 @@ class _SlidingCardState extends State<SlidingCard> {
           margin: EdgeInsets.only(left: 8, right: 8, bottom: 24),
           elevation: 8,
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Column(
             children: <Widget>[
               ClipRRect(
@@ -106,7 +116,37 @@ class _SlidingCardState extends State<SlidingCard> {
                           return player;
                         })),
               ),
-              SizedBox(height: 8),
+              SizedBox(
+                height: 6,
+              ),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: GestureDetector(
+                    onTap: () => Navigator.pushNamed(context, "/userDetails",
+                        arguments:widget.slinkShot.userDetails),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 8),
+                      child: Row(
+                        children: [
+                          FadeInImage.assetNetwork(
+                            placeholder: AppIcons.imageLoading,
+                            width: 20,
+                            height: 20,
+                            image: image,
+                          ),
+                          SizedBox(
+                            width: 2,
+                          ),
+                          Text(
+                            widget.slinkShot.user["username"],
+                            style: AppTextStyle.regularTitle14
+                                .copyWith(color: PaletteColors.blueColorApp),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -137,8 +177,8 @@ class _SlidingCardState extends State<SlidingCard> {
                                         widget.slinkShot.viewNumber.toString(),
                                         style: AppTextStyle.regularTitle16
                                             .copyWith(
-                                            color: PaletteColors
-                                                .mainBackground)),
+                                                color: PaletteColors
+                                                    .mainBackground)),
                                   ),
                                   Image.asset(
                                     AppIcons.eye,
@@ -171,6 +211,7 @@ class _SlidingCardState extends State<SlidingCard> {
                             label: "Share",
                             color: PaletteColors.blackAppColor.withOpacity(0.7),
                             icon: AppIcons.share,
+                            onPressed: (){},
                           ),
                           Spacer(),
                           Text(widget.slinkShot.like.toString(),

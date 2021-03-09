@@ -24,11 +24,11 @@ class SkinTab extends StatelessWidget {
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 200,
                   childAspectRatio: 2.4 / 2,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20),
+                  crossAxisSpacing: 6,
+                  mainAxisSpacing: 6),
               itemCount: providerState.skinsList.length,
               itemBuilder: (BuildContext ctx, index) {
-                return SkinWidget(mContext:ctx,skin:providerState.skinsList[index],bgColor:PaletteColors.blueColorApp );
+                return SkinWidget(mContext:ctx,skin:providerState.skinsList[index],bgColor:PaletteColors.secondBackground ,onPressed: ()=> Navigator.pushNamed(context, '/skinDetails', arguments: providerState.skinsList[index]),);
               });
     });
   }
